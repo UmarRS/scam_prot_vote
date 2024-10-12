@@ -15,6 +15,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { useToast } from "@/hooks/use-toast";
+import axios from "axios";
 
 const formSchema = z.object({
   url: z.string().url({ message: "Please enter a valid URL" }),
@@ -36,18 +37,54 @@ function AddWebsitePage() {
   });
   const { toast } = useToast();
 
-  const onSubmit = (values) => {
+  // Function to extract company name from the URL
+  const extractCompanyName = (url) => {
+    const regex = /https?:\/\/(?:www\.)?([^\.]+)\./;
+    const match = url.match(regex);
+    return match ? match[1] : "Unknown";
+  };
+
+  const onSubmit = async (values) => {
     setIsSubmitting(true);
-    console.log(values);
-    // Here you would typically send the data to your backend
-    setTimeout(() => {
-      setIsSubmitting(false);
+
+    // Extract the company name from the URL
+    const companyName = extractCompanyName(values.url);
+
+    // Prepare the data to send to the backend
+    const payload = {
+      siteurl: values.url,
+      company: companyName,
+      description: values.description,
+    };
+
+    try {
+      // Send the POST request to the backend using axios
+      const response = await axios.post(
+        "http://localhost:5001/api/voting/createwebsite",
+        payload
+      );
+
+      if (response.status === 201) {
+        toast({
+          title: "Website added",
+          description: "The website has been successfully added.",
+        });
+        form.reset();
+      } else {
+        toast({
+          title: "Error",
+          description: "There was an error adding the website.",
+        });
+      }
+    } catch (error) {
+      console.error("Error adding website:", error);
       toast({
-        title: "Website added",
-        description: "The website has been successfully added.",
+        title: "Error",
+        description: "An unexpected error occurred.",
       });
-      form.reset();
-    }, 1000);
+    }
+
+    setIsSubmitting(false);
   };
 
   return (

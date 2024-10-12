@@ -1,30 +1,53 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import { ChevronDown, ChevronUp, ThumbsUp } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 
-// Sample data for websites
-const initialWebsites = [
-  { id: 1, name: "Vercel", url: "https://vercel.com", votes: 0 },
-  { id: 2, name: "Next.js", url: "https://nextjs.org", votes: 0 },
-  { id: 3, name: "Tailwind CSS", url: "https://tailwindcss.com", votes: 0 },
-  { id: 4, name: "shadcn/ui", url: "https://ui.shadcn.com", votes: 0 },
-];
-
 function CurrentWebsites() {
-  const [websites, setWebsites] = useState(initialWebsites);
+  const [websites, setWebsites] = useState([]);
   const [expandedUrls, setExpandedUrls] = useState({});
+
+  useEffect(() => {
+    // Fetch all websites from the backend
+    const fetchWebsites = async () => {
+      try {
+        const response = await axios.get(
+          "http://localhost:5001/api/voting/getvotes"
+        );
+        setWebsites(response.data);
+      } catch (error) {
+        console.error("Error fetching websites:", error);
+      }
+    };
+
+    fetchWebsites();
+  }, []);
 
   const toggleUrlExpansion = (id) => {
     setExpandedUrls((prev) => ({ ...prev, [id]: !prev[id] }));
   };
 
-  const upvoteWebsite = (id) => {
-    setWebsites((prev) =>
-      prev.map((website) =>
-        website.id === id ? { ...website, votes: website.votes + 1 } : website
-      )
-    );
+  const upvoteWebsite = async (id) => {
+    try {
+      // Send a POST request to the backend to upvote the website
+      const response = await axios.post(
+        `http://localhost:5001/api/voting/upvote`,
+        { id }
+      );
+      if (response.status === 200) {
+        // Update the votes count in the frontend
+        setWebsites((prev) =>
+          prev.map((website) =>
+            website._id === id
+              ? { ...website, currentvotes: website.currentvotes + 1 }
+              : website
+          )
+        );
+      }
+    } catch (error) {
+      console.error("Error upvoting website:", error);
+    }
   };
 
   return (
@@ -32,9 +55,9 @@ function CurrentWebsites() {
       <h1 className="text-3xl font-bold mb-6">Current Websites</h1>
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
         {websites.map((website) => (
-          <Card key={website.id} className="overflow-hidden">
+          <Card key={website._id} className="overflow-hidden">
             <CardHeader className="pb-2">
-              <CardTitle>{website.name}</CardTitle>
+              <CardTitle>{website.company}</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="mb-2">
@@ -42,18 +65,18 @@ function CurrentWebsites() {
                   variant="ghost"
                   size="sm"
                   className="p-0 h-auto font-normal"
-                  onClick={() => toggleUrlExpansion(website.id)}
+                  onClick={() => toggleUrlExpansion(website._id)}
                 >
-                  {expandedUrls[website.id] ? (
+                  {expandedUrls[website._id] ? (
                     <ChevronUp className="h-4 w-4 mr-1" />
                   ) : (
                     <ChevronDown className="h-4 w-4 mr-1" />
                   )}
-                  {expandedUrls[website.id] ? "Hide URL" : "Show URL"}
+                  {expandedUrls[website._id] ? "Hide URL" : "Show URL"}
                 </Button>
-                {expandedUrls[website.id] && (
+                {expandedUrls[website._id] && (
                   <p className="text-sm text-muted-foreground mt-1">
-                    {website.url}
+                    {website.siteurl}
                   </p>
                 )}
               </div>
@@ -61,14 +84,14 @@ function CurrentWebsites() {
                 <Button
                   variant="outline"
                   size="sm"
-                  onClick={() => upvoteWebsite(website.id)}
+                  onClick={() => upvoteWebsite(website._id)}
                   className="flex items-center"
                 >
                   <ThumbsUp className="h-4 w-4 mr-1" />
                   Upvote
                 </Button>
                 <span className="text-sm font-medium">
-                  {website.votes} votes
+                  {website.currentvotes} votes
                 </span>
               </div>
             </CardContent>

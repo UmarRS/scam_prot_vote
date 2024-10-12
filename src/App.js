@@ -12,6 +12,7 @@ function App() {
         <Routes>
           <Route path="/currentsites" element={<CurrentWebsites />} />
           <Route path="/addwebsite" element={<AddWebsitePage />} />
+          <Route path="/" element={<CurrentWebsites />} />
         </Routes>
       </div>
     </Router>
