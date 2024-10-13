@@ -41,6 +41,52 @@ const Support = () => {
     }
   };
 
+  //gemini formatting
+  const applyBoldFormatting = (text) => {
+    const regexBold = /\*\*(.*?)\*\*/g;
+    const parts = text.split(regexBold);
+    return parts.map((part, index) => {
+      if (index % 2 === 1) {
+        return <strong key={index}>{part}</strong>;
+      }
+      return part;
+    });
+  };
+
+  //gemini formatting
+  const renderMessageWithFormatting = (text) => {
+    const bulletRegex = /^\*\s?(.*)$/gm;
+    const numberRegex = /^\d+\.\s?(.*)$/gm;
+
+    if (bulletRegex.test(text)) {
+      const bulletItems = text.match(bulletRegex);
+      return (
+        <ul className="list-disc pl-6">
+          {bulletItems.map((item, index) => (
+            <li key={index}>
+              {applyBoldFormatting(item.replace(/^\*\s?/, ""))}
+            </li>
+          ))}
+        </ul>
+      );
+    }
+
+    if (numberRegex.test(text)) {
+      const numberedItems = text.match(numberRegex);
+      return (
+        <ol className="list-decimal pl-6">
+          {numberedItems.map((item, index) => (
+            <li key={index}>
+              {applyBoldFormatting(item.replace(/^\d+\.\s?/, ""))}
+            </li>
+          ))}
+        </ol>
+      );
+    }
+
+    return applyBoldFormatting(text);
+  };
+
   return (
     <div className="min-h-screen bg-gray-100">
       <div className="text-center pt-10 pb-4">
@@ -69,7 +115,7 @@ const Support = () => {
                     : "bg-gray-200 text-black self-start"
                 }`}
               >
-                {message.parts[0].text}
+                {renderMessageWithFormatting(message.parts[0].text)}
               </div>
             ))}
           </div>
