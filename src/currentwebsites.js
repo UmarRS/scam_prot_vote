@@ -9,7 +9,7 @@ function CurrentWebsites() {
   const [expandedUrls, setExpandedUrls] = useState({});
 
   useEffect(() => {
-    // Fetch all websites from the backend
+    //fetch everything
     const fetchWebsites = async () => {
       try {
         const response = await axios.get(
@@ -30,13 +30,12 @@ function CurrentWebsites() {
 
   const upvoteWebsite = async (id) => {
     try {
-      // Send a POST request to the backend to upvote the website
       const response = await axios.post(
         `http://localhost:5001/api/voting/upvote`,
         { id }
       );
       if (response.status === 200) {
-        // Update the votes count in the frontend
+        //vote updater
         setWebsites((prev) =>
           prev.map((website) =>
             website._id === id

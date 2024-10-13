@@ -4,10 +4,10 @@ import {
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from "@/components/ui/accordion"; // Adjust the path as needed
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"; // Adjust the path as needed
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"; // Adjust the path as needed
-import { Button } from "@/components/ui/button"; // Adjust the path as needed
+} from "@/components/ui/accordion";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { Button } from "@/components/ui/button";
 import {
   ChevronRight,
   AlertTriangle,
@@ -15,7 +15,7 @@ import {
   MessageSquare,
   Mail,
   Smartphone,
-} from "lucide-react"; // Assuming you're using lucide-react for icons
+} from "lucide-react";
 
 const ScamPreventionGuide = () => {
   return (

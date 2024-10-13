@@ -16,7 +16,6 @@ function App() {
           <Route path="/addwebsite" element={<AddWebsitePage />} />
           <Route path="/support" element={<Support />} />
           <Route path="/education" element={<ScamPreventionGuide />} />
-
           <Route path="/" element={<CurrentWebsites />} />
         </Routes>
       </div>

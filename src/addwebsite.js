@@ -37,7 +37,6 @@ function AddWebsitePage() {
   });
   const { toast } = useToast();
 
-  // Function to extract company name from the URL
   const extractCompanyName = (url) => {
     const regex = /https?:\/\/(?:www\.)?([^\.]+)\./;
     const match = url.match(regex);
@@ -47,10 +46,8 @@ function AddWebsitePage() {
   const onSubmit = async (values) => {
     setIsSubmitting(true);
 
-    // Extract the company name from the URL
     const companyName = extractCompanyName(values.url);
 
-    // Prepare the data to send to the backend
     const payload = {
       siteurl: values.url,
       company: companyName,
@@ -58,7 +55,6 @@ function AddWebsitePage() {
     };
 
     try {
-      // Send the POST request to the backend using axios
       const response = await axios.post(
         "http://localhost:5001/api/voting/createwebsite",
         payload

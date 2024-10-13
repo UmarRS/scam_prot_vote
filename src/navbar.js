@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import "./navbar.css"; // Import the CSS file
+import "./navbar.css";
 
 function Navbar() {
   const [activeButton, setActiveButton] = useState("current");
   const navigate = useNavigate();
-  const location = useLocation(); // Get the current location
-
-  // This effect will run when the URL changes and update the active button
+  const location = useLocation();
+  //update active buttons
   useEffect(() => {
     const path = location.pathname;
 
@@ -21,8 +20,7 @@ function Navbar() {
     } else if (path === "/education") {
       setActiveButton("learnMore");
     }
-  }, [location.pathname]); // Update when the pathname changes
-
+  }, [location.pathname]);
   const handleNavigation = (button) => {
     setActiveButton(button);
     if (button === "current") {
@@ -39,7 +37,7 @@ function Navbar() {
   return (
     <nav className="flex items-center justify-between px-4 py-2 bg-white  m-3">
       <div className="flex items-center text-xl font-bold text-primary">
-        <span className="icon">shield</span> {/* Material Icon for shield */}
+        <span className="icon">shield</span>
         <span className="ml-2">Scam Protection</span>
       </div>
       <div className="flex space-x-4">
@@ -88,7 +86,7 @@ function Navbar() {
           Learn More
         </Button>
       </div>
-      <div className="w-[120px]" /> {/* Spacer to balance the layout */}
+      <div className="w-[120px]" />
     </nav>
   );
 }

@@ -43,7 +43,6 @@ const Support = () => {
 
   return (
     <div className="min-h-screen bg-gray-100">
-      {/* Title and subtitle */}
       <div className="text-center pt-10 pb-4">
         <h1 className="text-4xl font-extrabold text-blue-600">Live Support</h1>
         <p className="text-lg text-gray-600 mt-2">
@@ -51,7 +50,6 @@ const Support = () => {
         </p>
       </div>
 
-      {/* Chatbox */}
       <div className="flex justify-center items-center h-full">
         <div className="w-full max-w-4xl bg-white shadow-lg rounded-lg p-6">
           <div className="flex flex-col space-y-4 h-96 overflow-y-auto">
@@ -76,7 +74,6 @@ const Support = () => {
             ))}
           </div>
 
-          {/* Input and Send Button */}
           <div className="mt-4 flex space-x-2">
             <input
               type="text"
