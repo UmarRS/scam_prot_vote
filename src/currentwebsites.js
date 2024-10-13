@@ -51,52 +51,56 @@ function CurrentWebsites() {
   };
 
   return (
-    <div className="container mx-auto p-4">
-      <h1 className="text-3xl font-bold mb-6">Current Websites</h1>
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-        {websites.map((website) => (
-          <Card key={website._id} className="overflow-hidden">
-            <CardHeader className="pb-2">
-              <CardTitle>{website.company}</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="mb-2">
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  className="p-0 h-auto font-normal"
-                  onClick={() => toggleUrlExpansion(website._id)}
-                >
-                  {expandedUrls[website._id] ? (
-                    <ChevronUp className="h-4 w-4 mr-1" />
-                  ) : (
-                    <ChevronDown className="h-4 w-4 mr-1" />
+    <div className="bg-gray-100 min-h-screen">
+      <div className="container mx-auto  py-12">
+        <h1 className="text-4xl font-bold mb-6 font-extrabold text-blue-600 text-center">
+          Current Websites
+        </h1>
+        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+          {websites.map((website) => (
+            <Card key={website._id} className="overflow-hidden">
+              <CardHeader className="pb-2">
+                <CardTitle>{website.company}</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="mb-2">
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className="p-0 h-auto font-normal"
+                    onClick={() => toggleUrlExpansion(website._id)}
+                  >
+                    {expandedUrls[website._id] ? (
+                      <ChevronUp className="h-4 w-4 mr-1" />
+                    ) : (
+                      <ChevronDown className="h-4 w-4 mr-1" />
+                    )}
+                    {expandedUrls[website._id] ? "Hide URL" : "Show URL"}
+                  </Button>
+                  {expandedUrls[website._id] && (
+                    <p className="text-sm text-muted-foreground mt-1">
+                      {website.siteurl}
+                    </p>
                   )}
-                  {expandedUrls[website._id] ? "Hide URL" : "Show URL"}
-                </Button>
-                {expandedUrls[website._id] && (
-                  <p className="text-sm text-muted-foreground mt-1">
-                    {website.siteurl}
-                  </p>
-                )}
-              </div>
-              <div className="flex items-center justify-between">
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={() => upvoteWebsite(website._id)}
-                  className="flex items-center"
-                >
-                  <ThumbsUp className="h-4 w-4 mr-1" />
-                  Upvote
-                </Button>
-                <span className="text-sm font-medium">
-                  {website.currentvotes} votes
-                </span>
-              </div>
-            </CardContent>
-          </Card>
-        ))}
+                </div>
+                <div className="flex items-center justify-between">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => upvoteWebsite(website._id)}
+                    className="flex items-center"
+                  >
+                    <ThumbsUp className="h-4 w-4 mr-1" />
+                    Upvote
+                  </Button>
+                  <span className="text-sm font-medium">
+                    {website.currentvotes} votes
+                  </span>
+                </div>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
       </div>
     </div>
   );

@@ -88,52 +88,56 @@ function AddWebsitePage() {
   };
 
   return (
-    <div className="container mx-auto max-w-2xl py-12">
-      <h1 className="text-3xl font-bold mb-6">Add Website</h1>
-      <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-          <FormField
-            control={form.control}
-            name="url"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Website URL</FormLabel>
-                <FormControl>
-                  <Input placeholder="https://example.com" {...field} />
-                </FormControl>
-                <FormDescription>
-                  Enter the full URL of the website you want to add.
-                </FormDescription>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="description"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Description (Optional)</FormLabel>
-                <FormControl>
-                  <Textarea
-                    placeholder="Enter a brief description of the website"
-                    className="resize-none"
-                    {...field}
-                  />
-                </FormControl>
-                <FormDescription>
-                  You can provide a short description of the website (max 500
-                  characters).
-                </FormDescription>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <Button type="submit" disabled={isSubmitting}>
-            {isSubmitting ? "Adding..." : "Add Website"}
-          </Button>
-        </form>
-      </Form>
+    <div className="min-h-screen bg-gray-100">
+      <div className="container mx-auto max-w-2xl py-12 bg-gray-100">
+        <h1 className="text-4xl font-bold mb-6 text-blue-600 font-extrabold text-center">
+          Add Website
+        </h1>
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+            <FormField
+              control={form.control}
+              name="url"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Website URL</FormLabel>
+                  <FormControl>
+                    <Input placeholder="https://example.com" {...field} />
+                  </FormControl>
+                  <FormDescription>
+                    Enter the full URL of the website you want to add.
+                  </FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="description"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Description (Optional)</FormLabel>
+                  <FormControl>
+                    <Textarea
+                      placeholder="Enter a brief description of the website"
+                      className="resize-none"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormDescription>
+                    You can provide a short description of the website (max 500
+                    characters).
+                  </FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <Button type="submit" disabled={isSubmitting}>
+              {isSubmitting ? "Adding..." : "Add Website"}
+            </Button>
+          </form>
+        </Form>
+      </div>
     </div>
   );
 }
