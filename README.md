@@ -28,18 +28,8 @@ The Scam Protect Voting Frontend offers several essential features designed to h
 
    - Run `npm install` to install the necessary packages.
 
-3. **Add Environment Variables**:
-
-   - Create a `.env` file in the root directory of the project.
-   - Add the following keys to the `.env` file:
-     ```
-     GEMINI_API_KEY=YOUR API KEY
-     MONGODB_URI=YOUR MONGODB URI
-     ```
-   - The collections in the database will auto-populate; however, you need to manually create and add the `keys` database.
-
-4. **Start the Server**:
-   - Run the development server with the command: `npm run dev`.
+3. **Start the Site**:
+   - Run the site with the command: `npm start`.
 
 ---
 
